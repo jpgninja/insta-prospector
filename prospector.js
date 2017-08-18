@@ -4,8 +4,9 @@
  */
 jQuery(() => {
   // let profile = {};
-  let scrapeSource = '';
-
+  let scrapeSource = '',
+    delay = 100,
+    initialized = false;
 
   /**
    * init
@@ -15,18 +16,26 @@ jQuery(() => {
   let init = () => {
     let cachebuster = new Date();
     cachebuster = cachebuster.getTime();
+    console.log( (initialized) ? 'Checking updated DOM...' : 'Initializing Prospector...' );
 
     // Inject styles
-    jQuery('<link href="//loc.insta.loc/prospector.css?'+ cachebuster +'" rel="stylesheet"></link>').appendTo('head');
+    if ( !initialized ) {
+      jQuery('<link href="//loc.insta.loc/prospector.css?'+ cachebuster +'" id="ng_prospector_styles" rel="stylesheet"></link>').appendTo('head');
+    }
 
     // Inject dom elements
-    jQuery('<div href="#" id="ng_prospector"><a href="#" class="btn scrape">Scrape <span class="count"></span></a></div>').appendTo('body');
+    jQuery('<div href="#" id="ng_prospector"><a href="#" class="btn scrape">Scrape <span class="count"></span></a></div>').appendTo('body').hide();
+    if ( getPageType() === 'hashtag') {
+      jQuery('#ng_prospector').fadeIn();
+    }
 
     // Inject scripts
     // jQuery('<script src="/loc.insta.loc/lib/clipboard.min.js"></script>').appendTo('body');
 
     // Add Event Listeners
     addListeners();
+
+    initialized = true;
   }
 
 
@@ -37,8 +46,25 @@ jQuery(() => {
    */
   let addListeners = () => {
     jQuery('#ng_prospector .scrape').on('click', scrapePage);
-    // jQuery('body main article > div:nth(1) > a').on('click', () => { console.log('clicked!'); });
-    // jQuery(document).on('scroll', scrollHandler);
+
+    if ( !initialized ) {
+      /**
+      // @TODO: Detect URL change and show/hide accordingly
+      $( window.location ).bind("change", ( objEvent, objData ) => {
+          // var jLog = $( "#log" );
+          // Add the URL change.
+          console.log(
+            "<li>" +
+            "Hash changed from " +
+            "<strong>" + objData.previousHash + "</strong>" +
+            " to " +
+            "<strong>" + objData.currentHash + "</strong>" +
+            "</li>"
+          );
+        }
+      );
+      **/
+    }
   }
 
 
@@ -116,7 +142,7 @@ jQuery(() => {
 
           if (urls.length) {
             // console.log('usernames scraped: %d (%d to go)', usernames.length, urls.length);
-            setTimeout(() => { scrapeUsernamesFromPhotoUrls(urls, usernames); }, 900);
+            setTimeout(() => { scrapeUsernamesFromPhotoUrls(urls, usernames); }, delay);
           }
           else {
             // usernames = [].concat.apply([], usernames); // flatten array
@@ -126,7 +152,10 @@ jQuery(() => {
             scrapeUserProfiles( usernames );
           }
         },
-        error: () => { return false; }
+        error: () => {
+          // @TODO: check for 404's
+          return false;
+        }
       };
 
     // Send request
@@ -149,23 +178,24 @@ jQuery(() => {
           result = result.user;
 
           let fullname = result.full_name,
-            fname = (fullname) ? (fullname.split(' ').length > 0) ? fullname.split(' ')[0] : '' : '',
-            lname = (fullname) ? (fullname.split(' ').length > 1) ? fullname.replace(fname, '').trim() : '' : '',
+            splitname = fullname.split(' '),
+            fname = (fullname) ? (splitname.length > 0) ? splitname.shift() : '' : '',
+            lname = (fullname) ? (splitname.length > 1) ? splitname.join(' ').trim() : '' : '',
             followers = (result.followed_by.count) ? result.followed_by.count : 0,
             following = (result.follows.count) ? result.follows.count : 0,
-            profile_url1 = 'https://www.instagram.com/' + username,
+            profile_url = 'https://www.instagram.com/' + username,
             // bio = (result.biography) ? '"' + result.biography.replace(/[^\x20-\x7E]/gmi, "") + '"' : '""', // strips emojis
             bio = (result.biography) ? '"' + result.biography.replace(/(\r\n|\n|\r)/gm,"") + '"' : '""',
             external_url = (result.external_url) ? result.external_url : '', // @TODO we shouldn't be callign two profile_urls
             id = (result.id) ? result.id : 0,
-            profile = [username, fname, lname, '', followers, following, profile_url1, bio, external_url, id];
+            profile = [username, fname, lname, '', followers, following, profile_url, bio, external_url, id];
 
           console.log('(%d/%d) Getting profile of: %s ... OK!', profiles.length+1, (usernames.length+profiles.length)+1, username);
           // console.log(bio);
           profiles.push( profile );
 
           if (usernames.length) {
-            setTimeout(() => { scrapeUserProfiles(usernames, profiles); }, 900);
+            setTimeout(() => { scrapeUserProfiles(usernames, profiles); }, delay);
           }
           else {
             outputScrape( profiles );
@@ -229,11 +259,11 @@ jQuery(() => {
             lname = result.full_name.replace(fname, '').trim(),
             followers = result.followed_by.count,
             following = result.follows.count,
-            profile_url1 = 'https://instagram.com/' + username,
+            profile_url = 'https://instagram.com/' + username,
             bio = '"' + result.biography + '"',
             external_url = (result.external_url) ? result.external_url : '', // @TODO we shouldn't be callign two profile_urls
             id = result.id,
-            profile = [username, fname, lname, '', followers, following, profile_url1, bio, external_url, id];
+            profile = [username, fname, lname, '', followers, following, profile_url, bio, external_url, id];
 
 
           return profile;
@@ -313,3 +343,51 @@ jQuery(() => {
   init();
 
 });
+
+/**
+
+// @TODO: Detect when URL changes and show/hide button accordingly
+
+(function( $ ){
+  // Default to the current location.
+  var strLocation = window.location.href;
+  var strHash = window.location.hash;
+  var strPrevLocation = "";
+  var strPrevHash = "";
+  // This is how often we will be checkint for
+  // changes on the location.
+  var intIntervalTime = 100;
+  // This method removes the pound from the hash.
+  var fnCleanHash = function( strHash ){
+    return( strHash.substring( 1, strHash.length ) );
+  }
+  // This will be the method that we use to check
+  // changes in the window location.
+  var fnCheckLocation = function(){
+    // Check to see if the location has changed.
+    if (strLocation != window.location.href){
+      // Store the new and previous locations.
+      strPrevLocation = strLocation;
+      strPrevHash = strHash;
+      strLocation = window.location.href;
+      strHash = window.location.hash;
+      // The location has changed. Trigger a
+      // change event on the location object,
+      // passing in the current and previous
+      // location values.
+      $( window.location ).trigger(
+        "change", {
+          currentHref: strLocation,
+          currentHash: fnCleanHash( strHash ),
+          previousHref: strPrevLocation,
+          previousHash: fnCleanHash( strPrevHash )
+        }
+      );
+    }
+  }
+  // Set an interval to check the location changes.
+  setInterval( fnCheckLocation, intIntervalTime );
+}
+)( jQuery );
+
+**/
