@@ -1,0 +1,146 @@
+#ng_prospector {
+  top:0;
+  right:0;
+  padding:20px 10px 10px;
+  width:125px;
+  z-index:9999;
+  position:fixed;
+  height:75px;
+}
+
+
+/* Global Button Styles */
+
+#ng_prospector a.btn:link,
+#ng_prospector a.btn:visited {
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	padding: 8px 15px;
+	/*color: #fff;*/
+	font-size:14px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	letter-spacing: .08em;
+	border-radius: 0;
+	text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+}
+
+#ng_prospector a.btn:link:after,
+#ng_prospector a.btn:visited:after {
+	content: "";
+	position: absolute;
+	height: 0%;
+	left: 50%;
+	top: 50%;
+	width: 150%;
+	z-index: -1;
+	-webkit-transition: all 0.15s ease 0s;
+	-moz-transition: all 0.15s ease 0s;
+	-o-transition: all 0.15s ease 0s;
+	transition: all 0.15s ease 0s;
+}
+
+#ng_prospector a.btn:link:hover,
+#ng_prospector a.btn:visited:hover {
+	color: #FFF;
+	text-shadow: none;
+}
+
+#ng_prospector a.btn:link:hover:after,
+#ng_prospector a.btn:visited:hover:after {
+	height: 450%;
+}
+
+#ng_prospector a.btn:link,
+#ng_prospector a.btn:visited {
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	padding: 8px 15px;
+	color: #fff;
+	font-size:14px;
+	border-radius: 0;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	overflow: hidden;
+	letter-spacing: .08em;
+	text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+}
+
+
+
+
+/* Victoria Buttons */
+
+/*
+
+#ng_prospector a.btn.victoria-one {
+	border: 2px solid #D24D57;
+}
+#ng_prospector a.btn.victoria-one:after {
+	background: #D24D57;
+	-moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+	-ms-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+	-webkit-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+	transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+}
+#ng_prospector a.btn.victoria-two {
+	border: 2px solid #D24D57;
+}
+#ng_prospector a.btn.victoria-two:after {
+	background: #D24D57;
+	-moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+	-ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+	-webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+	transform: translateX(-50%) translateY(-50%) rotate(25deg);
+}
+#ng_prospector a.btn.victoria-three {
+	border: 2px solid #D24D57;
+}
+#ng_prospector a.btn.victoria-three:after {
+	background: #D24D57;
+	opacity: .5;
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+#ng_prospector a.btn.victoria-three:hover:after {
+	height: 140%;
+	opacity: 1;
+}
+
+*/
+#ng_prospector a.btn,
+#ng_prospector a.btn:link,
+#ng_prospector a.btn:visited {
+	border: 2px solid #D24D57;
+  color: #D24D57;
+}
+#ng_prospector a.btn:after {
+	background: #D24D57;
+	opacity: .5;
+	-moz-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+	-ms-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+	-webkit-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+	transform: translateY(-50%) translateX(-50%) rotate(90deg);
+}
+#ng_prospector a.btn:hover:after {
+	opacity: 1;
+	height: 600% !important;
+  color:#fff;
+}
