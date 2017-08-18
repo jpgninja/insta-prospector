@@ -4,6 +4,7 @@
  */
 jQuery(() => {
   // let profile = {};
+  let scrapeSource = '';
 
 
   /**
@@ -160,7 +161,7 @@ jQuery(() => {
             profile = [username, fname, lname, '', followers, following, profile_url1, bio, external_url, id];
 
           console.log('(%d/%d) Getting profile of: %s ... OK!', profiles.length+1, (usernames.length+profiles.length)+1, username);
-          console.log(bio);
+          // console.log(bio);
           profiles.push( profile );
 
           if (usernames.length) {
@@ -185,15 +186,26 @@ jQuery(() => {
   let outputScrape = ( profiles = [] ) => {
     let myWindow,
       scrapeDate = new Date(),
-      scrapeData = "";
+      scrapeData = "",
+      source = getTitle();
 
     // Build output string
-    scrapeData += '<textarea style="width:1600px;height:900px;padding:10px;">';
+    // @TODO Load this in as html from external file, then split it and build profiles in
+    scrapeData += '<html><head>';
+    scrapeData += '<title>' + source + ' scrape results </title>';
+    scrapeData += '<link href="//loc.insta.loc/prospector-out.css" rel="stylesheet"></link>';
+    scrapeData += '</head><body id="out">';
+    scrapeData += '<h1>' + source + ' scrape results</h1>';
+    scrapeData += '<nav><a href="#" id="copy-to-clipboard" class="btn">Copy to clipboard</a><a href="#" id="export-csv" class="btn">Export as CSV</a></nav>';
+    scrapeData += '<textarea>';
     profiles.map( (profile) => {
-      scrapeData += profile.join(",");
-      scrapeData += "\r";
+      scrapeData += profile.join(",") + "\r";
     });
     scrapeData += '</textarea>';
+    scrapeData += '<script>let scrape = {source: "'+ source + '"};</script>';
+    scrapeData += '<script src="//code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>';
+    scrapeData += '<script src="//loc.insta.loc/prospector-out.js"></script>';
+    scrapeData += '</body></html>';
 
     // Open window
     scrapeId = 'scrape' + scrapeDate.getTime();
