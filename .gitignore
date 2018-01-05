@@ -1,3 +1,7 @@
+#dirs
+dist
 node_modules
-test.html
+
+#files
 .DS_Store
+package-lock.json

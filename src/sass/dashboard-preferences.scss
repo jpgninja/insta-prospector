@@ -1,0 +1,60 @@
+/**
+ * Preferences Pane Settings
+ *
+ */
+#ng_dashboard {
+  // &.preferences { //Display
+  //   .sidebar {
+  //     .btn-save,
+  //     .btn-export {
+  //       display:none;
+  //     }
+  //   }
+  // }
+  .main .preferences { // Pane
+    font-size:24pt;
+    label {
+      margin:15px;
+    }
+    input {
+      outline:none;
+    }
+    input[type="text"] {
+      border:1px solid #e5e5e5;
+      border-bottom-width:2px;
+      color:#566573;
+      background-color:#fff;
+      padding:10px;
+      &:focus {
+        border-color:#d0d0d0;
+      }
+    }
+
+    .delay {
+      font-size:24pt;
+      width:80px;
+      text-align:center;
+    }
+    .output-fields-label {
+      // font-size:16pt;
+      display:block;
+      line-height:1.4;
+      font-size:12pt;
+      strong {
+        font-weight:bold;
+        font-style:italic;
+        padding:2px 3px;
+        display:inline-block;
+        background-color:#fefefe;
+        font-size:10pt;
+        color:#2b333a;
+      }
+    }
+    .output-fields {
+      width:80%;
+      max-width:950px;
+      margin:0 auto;
+      font-size:12pt;
+    }
+  }
+}

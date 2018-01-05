@@ -1,0 +1,32 @@
+{
+  "name": "Insta Prospector",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "Scrapes bios from hashtags on Instagram",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "page_action": {
+    "default_title": "Prospector",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [ {
+    "matches": [ "https://www.instagram.com/explore/tags/*" ],
+    "js": [ "js/prospector.min.js" ],
+    "css": [ "css/prospector.min.css" ]
+  }],
+  "web_accessible_resources": [
+    "script.js",
+    "css/icon-prospect-24-off.png",
+    "images/icon-prospect-24-off.png",
+    "images/icon-prospect-24-on.png"
+  ]
+}

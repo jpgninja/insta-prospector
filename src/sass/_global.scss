@@ -1,0 +1,121 @@
+/**
+ * Prospector icon
+ *
+ */
+.ng_prospector {
+  width:24px;
+  height:24px;
+  background:transparent url(chrome-extension://__MSG_@@extension_id__/../images/icon-prospect-24-off.png) no-repeat center center;
+  transition:all .125s ease;
+  &:hover {
+    background-image:url(chrome-extension://__MSG_@@extension_id__/../images/icon-prospect-24-on.png);
+  }
+}
+.not-logged-in {
+  .ng_prospector {
+    margin-right:10px;
+  }
+}
+
+/**
+ * Dashboard
+ */
+#ng_dashboard {
+  background-color:#fafafa;
+  border-bottom:1px solid #eaeaea;
+  box-shadow:inset 0px 0 50px #dadada;
+  // font-family:'Avenir', Helvetica, Arial, sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-align:center;
+  color:#566573;
+  padding:15px 30px;
+  align-content:center;
+  height:350px;
+  display:flex;
+  justify-content:space-around;
+  flex-flow:row wrap;
+  align-items:stretch;
+  -webkit-justify-content:space-around;
+  -webkit-flex-flow:row wrap;
+  -webkit-align-items:stretch;
+  position:fixed;
+  width:100%;
+  top:50px;
+  z-index:999;
+  overflow:scroll; // let's hope this isn't needed :)
+  transition:top .5s ease;
+
+  &.no-scroll {
+    top:75px;
+  }
+
+  a {
+    transition:all .125s ease;
+  }
+
+  /*
+   * Hide inactive panes
+   */
+  &.home {
+    .main {
+      .output, .preferences { display:none; }
+    }
+  }
+  &.output {
+    .main {
+      .home, .preferences { display:none; }
+    }
+  }
+  &.preferences {
+    .main {
+      .output, .home { display:none; }
+    }
+  }
+
+
+  .sidebar {
+    padding:15px 30px 15px 0;
+    margin-right:30px;
+    border-right:1px dotted #ccc;
+    order:0;
+    flex:1;
+    text-align:right;
+    .nav {
+       list-style-type:none;
+       padding:0;
+       margin:0 0 30px;
+       li {
+         text-align: right;
+         margin-left:3px;
+         padding-left:3px;
+         a {
+           padding:0.3em 0.6em;
+           text-transform:uppercase;
+           font-size:10px;
+           &:hover {
+             background-color:#fafafa;
+             color:#333;
+           }
+         }
+       }
+     }
+    .actions {
+      list-style-type:none;
+      padding:0;
+      margin:0;
+
+      li {
+        margin-bottom:10px;
+      }
+    }
+  }
+  .main {
+    display:inline-block;
+    flex:4;
+    order:1;
+    align-content:center;
+  }
+
+}

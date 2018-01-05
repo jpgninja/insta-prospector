@@ -1,0 +1,74 @@
+/**
+ * Output pane
+ *
+ */
+
+#ng_dashboard {
+  &.output {
+    .sidebar {
+      .btn-export {
+        display:inline-block;
+      }
+    }
+  }
+  .main .output {
+    #out {
+      border:1px dotted #dadada;
+      height:260px;
+      max-width:100%;
+      padding:11pt;
+      line-height:1.1;
+      font-size:11pt;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      overflow: scroll;
+      margin-bottom:20px;
+      tr.even td {
+        background-color:#f0f0f0;
+      }
+      td {
+        padding:6px;
+        vertical-align: middle;
+        text-align: left;
+      }
+      .prospect-profile-pic {
+        width:100px;
+        text-align:center;
+        a {
+          display:block;
+        }
+        .prospect-pic {
+          width:50px;
+          height:50px;
+        }
+      }
+      .prospect-username {
+        width:200px;
+      }
+      .prospect-bio {
+        // width:70%;
+        // font-size:11pt;
+      }
+    }
+    .remaining {
+      margin:10px auto;
+      text-align:center;
+      display:none;
+    }
+    .idle {
+      margin:10px auto;
+    }
+  }
+
+  &.prospecting {
+    .main {
+      .output {
+        .idle {
+          display:none;
+        }
+        .remaining {
+          display:block;
+        }
+      }
+    }
+  }
+}
